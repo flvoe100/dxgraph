@@ -1,8 +1,8 @@
 package de.hhu.bsinfo.dxgraph.data;
 
 import de.hhu.bsinfo.dxram.data.DataStructure;
-import de.hhu.bsinfo.utils.serialization.Exporter;
-import de.hhu.bsinfo.utils.serialization.Importer;
+import de.hhu.bsinfo.dxutils.serialization.Exporter;
+import de.hhu.bsinfo.dxutils.serialization.Importer;
 
 import java.util.ArrayList;
 
