@@ -63,7 +63,7 @@
                 <fileset dir="${lib_dir}">
                     <include name="**/*.jar"/>
                 </fileset>
-                <fileset dir="/home/philipp/Promotion/dxram/${lib_dir}">
+                <fileset dir="../dxram/${lib_dir}">
                     <include name="**/*.jar"/>
                 </fileset>
             </classpath>
