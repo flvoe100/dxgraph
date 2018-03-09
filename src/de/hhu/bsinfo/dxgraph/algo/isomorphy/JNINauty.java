@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class JNINauty implements IsomorphyInterface {
     public JNINauty(){
-        System.loadLibrary("NautyCheck");
+        System.loadLibrary("JNINauty");
     }
     private native void init(int vertices);
     private native void addEdge(int graph, int v, int w);
