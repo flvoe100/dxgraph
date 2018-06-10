@@ -1,35 +1,40 @@
 package de.hhu.bsinfo.dxgraph.algo.bronkerbosch;
 
+import de.hhu.bsinfo.dxgraph.DXGraph;
 import de.hhu.bsinfo.dxgraph.data.Graph;
 import de.hhu.bsinfo.dxgraph.data.Vertex;
 import de.hhu.bsinfo.dxram.chunk.ChunkService;
 
 import java.util.ArrayList;
 
-public class BronKerboschAlgo extends Thread {
-    private ArrayList<Vertex> input = null;
+public class BronKerboschAlgo {
+    private DXGraph input = null;
     private ChunkService cs;
-    private ArrayList<String> result;
+    private ArrayList<ArrayList<Vertex>> result;
     public BronKerboschAlgo(){
         cs = new ChunkService();
-        result = new ArrayList<String>();
+        result = new ArrayList<ArrayList<Vertex>>();
     }
-    public BronKerboschAlgo(Graph g){
+    public BronKerboschAlgo(DXGraph g){
         super();
-        input = g.getVertices();
+        input = g;
     }
     public BronKerboschAlgo(ArrayList<Vertex> i){
         super();
-       input = i;
+       input = new DXGraph();
+       for (Vertex v : i){
+           input.createVertices(v);
+       }
     }
 
-    public ArrayList<String> getResult() {
+    public ArrayList<ArrayList<Vertex>> getResult() {
+        BronKerboschStep(new ArrayList<Vertex>(), input, new ArrayList<Vertex>());
         return result;
     }
 
     private void BronKerboschStep(ArrayList<Vertex> r, ArrayList<Vertex> p, ArrayList<Vertex> x){
         if (p.isEmpty() && x.isEmpty()){
-            result.add(r.toString());
+            result.add(r);
             return;
         }
         for (Vertex v : p){
@@ -56,9 +61,4 @@ public class BronKerboschAlgo extends Thread {
         }
         return al;
     }
-
-    public void run() {
-        BronKerboschStep(new ArrayList<Vertex>(), input, new ArrayList<Vertex>());
-    }
-
 }

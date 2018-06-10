@@ -38,6 +38,5 @@ public class JNINauty implements IsomorphyInterface {
         JNINauty checker = new JNINauty();
         System.out.println(checker.check(4,edges_1,4,edges_1));
         System.out.println(checker.check(3,edges_1,3,edges_2));
-        //checker = new JNINauty();
     }
 }
