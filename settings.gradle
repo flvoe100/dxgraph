@@ -1,0 +1,4 @@
+include ":native"
+//includeBuild 'native'
+includeBuild '../dxram'
+rootProject.name = 'dxgraph'

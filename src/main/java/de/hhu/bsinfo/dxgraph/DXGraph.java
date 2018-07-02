@@ -82,7 +82,6 @@ public class DXGraph extends AbstractApplication {
      *
      * @param p_edges
      *         Edges to create storage space for.
-     * @return Number of successfully created storage locations.
      */
     public void createEdges(final Edge... p_edges) {
         m_chunkService.create((DataStructure[]) p_edges);

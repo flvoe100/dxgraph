@@ -41,8 +41,10 @@ public class BFSLevelFinishedMessage extends Message {
     /**
      * Creates an instance of BFSLevelFinishedMessage
      *
-     * @param p_destination
-     *         the destination
+     * @param p_destination the destination
+     * @param p_token the token
+     * @param p_sentMsgCount the message send counter
+     * @param p_receivedMsgCount the message receive counter
      */
     public BFSLevelFinishedMessage(final short p_destination, final int p_token, final long p_sentMsgCount, final long p_receivedMsgCount) {
         super(p_destination, DXGraphMessageTypes.BFS_MESSAGES_TYPE, BFSMessages.SUBTYPE_BFS_LEVEL_FINISHED_MESSAGE);

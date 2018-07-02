@@ -129,7 +129,7 @@ public class GraphAlgorithmBFSTask implements Task {
      * @param p_beamerMode
      *         Run the BFS algorithm with bottom up optimized mode (beamer). False to run top-down approach only
      * @param p_beamerFormulaGraphEdgeDeg
-     *         Avg. edge degree of the graph (parameter on typical rmat generators). Used to determine top down <-> bottom up switching on beamer mode
+     *         Avg. edge degree of the graph (parameter on typical rmat generators). Used to determine top down or bottom up switching on beamer mode
      * @param p_abortBFSOnError
      *         Abort BFS execution on error or continue even on errors
      */

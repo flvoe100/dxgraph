@@ -28,7 +28,7 @@ public class BronKerboschAlgo {
     }
 
     public ArrayList<ArrayList<Vertex>> getResult() {
-        BronKerboschStep(new ArrayList<Vertex>(), input, new ArrayList<Vertex>());
+        BronKerboschStep(new ArrayList<Vertex>(), new ArrayList<Vertex>(),  new ArrayList<Vertex>());
         return result;
     }
 

@@ -18,4 +18,7 @@ public class NullLoader{
     public void load(String path) {
 
     }
+    public String getStats(){
+        return "";
+    }
 }
