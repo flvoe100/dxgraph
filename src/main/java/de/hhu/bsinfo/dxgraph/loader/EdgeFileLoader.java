@@ -14,8 +14,10 @@ import java.util.Map;
 
 public class EdgeFileLoader extends NullLoader {
     private int m_edegs,m_vertices;
-    public EdgeFileLoader(DXRAMServiceAccessor dxramServiceAccessor) {
-        super(dxramServiceAccessor);
+    private ChunkService m_cs;
+    public EdgeFileLoader(ChunkService p_cs) {
+        super(p_cs);
+        m_cs = p_cs;
         m_edegs = 0;
         m_vertices = 0;
     }
@@ -38,9 +40,9 @@ public class EdgeFileLoader extends NullLoader {
                     v1_vertex = new Vertex();
                     v1_vertex.setNeighborsAreEdgeObjects(true);
                     vertex_id_map.put(v1,v1_vertex);
-                    m_cs.reserve(v1_vertex);
-                    //m_cs.create(v1_vertex);
-                    //m_cs.put(v1_vertex);
+                   // m_cs.reserve(v1_vertex);
+                    m_cs.create(v1_vertex);
+                    m_cs.put(v1_vertex);
                     m_vertices++;
                 }
                 Vertex v2_vertex;
@@ -50,9 +52,9 @@ public class EdgeFileLoader extends NullLoader {
                     v2_vertex = new Vertex();
                     v2_vertex.setNeighborsAreEdgeObjects(true);
                     vertex_id_map.put(v2, v2_vertex);
-                    m_cs.reserve(v2_vertex);
-                    //m_cs.create(v2_vertex);
-                    //m_cs.put(v2_vertex);
+                    //m_cs.reserve(v2_vertex);
+                    m_cs.create(v2_vertex);
+                    m_cs.put(v2_vertex);
                     m_vertices++;
                 }
                 Edge e = new Edge();

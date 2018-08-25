@@ -7,9 +7,8 @@ import de.hhu.bsinfo.dxram.engine.DXRAMServiceAccessor;
 public class NullLoader{
     protected DXRAMServiceAccessor m_dxramServiceAccessor;
     protected ChunkService m_cs;
-    public NullLoader(DXRAMServiceAccessor dxramServiceAccessor){
-        m_dxramServiceAccessor = dxramServiceAccessor;
-        m_cs = m_dxramServiceAccessor.getService(ChunkService.class);
+    public NullLoader(ChunkService p_cs){
+        m_cs = p_cs;
     }
     public boolean isSupported(String path) {
         return false;

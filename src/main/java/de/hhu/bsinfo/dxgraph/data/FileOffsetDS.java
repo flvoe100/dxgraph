@@ -13,7 +13,10 @@ public class FileOffsetDS extends DataStructure {
     public int m_endFile;
     public String m_path;
     public FileOffsetDS(){
-
+        super();
+    }
+    public FileOffsetDS(long p_chunkID){
+        super(p_chunkID);
     }
     public FileOffsetDS(int p_start, int p_end, String p_path){
         m_startFile = p_start;

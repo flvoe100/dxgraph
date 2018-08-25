@@ -20,6 +20,7 @@ import de.hhu.bsinfo.dxgraph.algo.bfs.interfaces.TraversalVertexCallback;
 import de.hhu.bsinfo.dxram.DXRAM;
 import de.hhu.bsinfo.dxram.app.AbstractApplication;
 import de.hhu.bsinfo.dxram.engine.DXRAMVersion;
+import de.hhu.bsinfo.dxram.generated.BuildConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -266,7 +267,7 @@ public class DXGraph extends AbstractApplication {
 
     @Override
     public DXRAMVersion getBuiltAgainstVersion() {
-        return DXRAM.VERSION;
+        return BuildConfig.DXRAM_VERSION;
     }
 
     @Override

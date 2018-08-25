@@ -1,9 +1,12 @@
 package de.hhu.bsinfo.dxgraph.tasks;
 
 import com.google.gson.annotations.Expose;
+import de.hhu.bsinfo.dxgraph.data.DSString;
 import de.hhu.bsinfo.dxgraph.data.FileOffsetDS;
+import de.hhu.bsinfo.dxgraph.jobs.DataLoadingJob;
 import de.hhu.bsinfo.dxram.chunk.ChunkService;
 import de.hhu.bsinfo.dxram.data.DSByteBuffer;
+import de.hhu.bsinfo.dxram.job.JobService;
 import de.hhu.bsinfo.dxram.ms.Signal;
 import de.hhu.bsinfo.dxram.ms.Task;
 import de.hhu.bsinfo.dxram.ms.TaskContext;
@@ -19,7 +22,6 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 /**
  * Created by philipp on 27.06.17.
  */
@@ -30,20 +32,19 @@ public class LoadingSchedulerTask implements Task {
 
     @Expose
     private String m_path = "./";
+    @Expose
+    private String m_LoaderClass = "de.hhu.bsinfo.dxgraph.loader.NullLoader";
 
     @Override
     public void exportObject(final Exporter p_exporter) {
-        p_exporter.writeInt(m_path.length());
-        p_exporter.writeBytes(m_path.getBytes(StandardCharsets.UTF_8));
+        p_exporter.writeString(m_path);
+        p_exporter.writeString(m_LoaderClass);
     }
 
     @Override
     public void importObject(final Importer p_importer) {
-        int strLength =0;
-        strLength= p_importer.readInt(strLength);
-        byte[] tmp = new byte[strLength];
-        p_importer.readBytes(tmp);
-        m_path = new String(tmp, StandardCharsets.UTF_8);
+        m_path = p_importer.readString(m_path);
+        m_LoaderClass = p_importer.readString(m_LoaderClass);
     }
 
     @Override
@@ -51,10 +52,13 @@ public class LoadingSchedulerTask implements Task {
         if (p_ctx.getCtxData().getSlaveId() == 0) {
             TemporaryStorageService temporaryStorageService = p_ctx.getDXRAMServiceAccessor().getService(TemporaryStorageService.class);
             NameserviceService nameserviceService = p_ctx.getDXRAMServiceAccessor().getService(NameserviceService.class);
-
+            JobService js = p_ctx.getDXRAMServiceAccessor().getService(JobService.class);
 
             ChunkService chunkService = p_ctx.getDXRAMServiceAccessor().getService(ChunkService.class);
 
+            DSString ds_loaderClass = new DSString(m_LoaderClass);
+            chunkService.create(ds_loaderClass);
+            chunkService.put(ds_loaderClass);
 
             short[] slaves = p_ctx.getCtxData().getSlaveNodeIds();
             LOGGER.info("Found %d peers", slaves.length);
@@ -84,11 +88,10 @@ public class LoadingSchedulerTask implements Task {
                 LOGGER.info("Node 0x%X files: %d", slaves[i], fileCount);
                 chunkService.create(ds);
                 chunkService.put(ds);
-                nameserviceService.register(ds, ""+i);
+                DataLoadingJob dlj = new DataLoadingJob(ds.getID());
+                js.pushJobRemote(dlj,slaves[i]);
             }
-            DSByteBuffer ds = new DSByteBuffer(ByteBuffer.allocate(4).putInt(files.length));
-            chunkService.create(ds);
-            chunkService.put(ds);
+            js.waitForAllJobsToFinish();
         }
         return 0;
     }
