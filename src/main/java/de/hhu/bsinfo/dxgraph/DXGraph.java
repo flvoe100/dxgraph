@@ -13,26 +13,19 @@
 
 package de.hhu.bsinfo.dxgraph;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 import de.hhu.bsinfo.dxgraph.algo.bfs.interfaces.TraversalVertexCallback;
-import de.hhu.bsinfo.dxram.DXRAM;
+import de.hhu.bsinfo.dxgraph.data.Edge;
+import de.hhu.bsinfo.dxgraph.data.Vertex;
 import de.hhu.bsinfo.dxram.app.AbstractApplication;
+import de.hhu.bsinfo.dxram.chunk.ChunkRemoveService;
+import de.hhu.bsinfo.dxram.chunk.ChunkService;
+import de.hhu.bsinfo.dxram.data.DataStructure;
 import de.hhu.bsinfo.dxram.engine.DXRAMVersion;
 import de.hhu.bsinfo.dxram.generated.BuildConfig;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.hhu.bsinfo.dxgraph.data.Edge;
-import de.hhu.bsinfo.dxgraph.data.Vertex;
-import de.hhu.bsinfo.dxram.chunk.ChunkRemoveService;
-import de.hhu.bsinfo.dxram.chunk.ChunkService;
-import de.hhu.bsinfo.dxram.data.DataStructure;
-import de.hhu.bsinfo.dxram.job.AbstractJob;
-import de.hhu.bsinfo.dxram.logger.LoggerService;
-import de.hhu.bsinfo.dxutils.serialization.Exporter;
-import de.hhu.bsinfo.dxutils.serialization.Importer;
+import java.lang.reflect.Array;
 
 /**
  * Special wrapper API (though DXRAMEngine is still accessible) providing
