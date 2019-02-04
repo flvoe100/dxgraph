@@ -4,8 +4,8 @@ package de.hhu.bsinfo.dxgraph.tasks;
 import com.google.gson.annotations.Expose;
 import de.hhu.bsinfo.dxgraph.data.FileOffsetDS;
 import de.hhu.bsinfo.dxgraph.loader.NullLoader;
+import de.hhu.bsinfo.dxmem.data.ChunkID;
 import de.hhu.bsinfo.dxram.chunk.ChunkService;
-import de.hhu.bsinfo.dxram.data.ChunkID;
 import de.hhu.bsinfo.dxram.engine.DXRAMServiceAccessor;
 import de.hhu.bsinfo.dxram.ms.Signal;
 import de.hhu.bsinfo.dxram.ms.Task;
@@ -55,7 +55,7 @@ public class LoadingTask implements Task {
         }
         FileOffsetDS ds = new FileOffsetDS();
         ds.setID(chunkId);
-        chunkService.get(ds);
+        chunkService.get().get(ds);
         LOGGER.info("Loading %d files from %s",ds.getFileCount(),ds.m_path);
 
         File fhFolder = new File(ds.m_path);

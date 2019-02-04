@@ -5,7 +5,6 @@ import de.hhu.bsinfo.dxgraph.data.DSString;
 import de.hhu.bsinfo.dxgraph.data.FileOffsetDS;
 import de.hhu.bsinfo.dxgraph.jobs.DataLoadingJob;
 import de.hhu.bsinfo.dxram.chunk.ChunkService;
-import de.hhu.bsinfo.dxram.data.DSByteBuffer;
 import de.hhu.bsinfo.dxram.job.JobService;
 import de.hhu.bsinfo.dxram.ms.Signal;
 import de.hhu.bsinfo.dxram.ms.Task;
@@ -55,10 +54,10 @@ public class LoadingSchedulerTask implements Task {
             JobService js = p_ctx.getDXRAMServiceAccessor().getService(JobService.class);
 
             ChunkService chunkService = p_ctx.getDXRAMServiceAccessor().getService(ChunkService.class);
-
+            short lokalNodeId = p_ctx.getCtxData().getOwnNodeId();
             DSString ds_loaderClass = new DSString(m_LoaderClass);
-            chunkService.create(ds_loaderClass);
-            chunkService.put(ds_loaderClass);
+            chunkService.create().create(lokalNodeId, ds_loaderClass);
+            chunkService.put().put(ds_loaderClass);
 
             short[] slaves = p_ctx.getCtxData().getSlaveNodeIds();
             LOGGER.info("Found %d peers", slaves.length);
@@ -86,8 +85,8 @@ public class LoadingSchedulerTask implements Task {
                 int fileCount = endFile-startFile;
                 FileOffsetDS ds = new FileOffsetDS(startFile,endFile,m_path);
                 LOGGER.info("Node 0x%X files: %d", slaves[i], fileCount);
-                chunkService.create(ds);
-                chunkService.put(ds);
+                chunkService.create().create(lokalNodeId, ds);
+                chunkService.put().put(ds);
                 DataLoadingJob dlj = new DataLoadingJob(ds.getID());
                 js.pushJobRemote(dlj,slaves[i]);
             }
