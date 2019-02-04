@@ -1,12 +1,12 @@
 package de.hhu.bsinfo.dxgraph.algo.bfs;
 
-import de.hhu.bsinfo.dxgraph.DXGraph;
+
 import de.hhu.bsinfo.dxgraph.algo.bfs.interfaces.TraversalEdgeCallback;
 import de.hhu.bsinfo.dxgraph.algo.bfs.interfaces.TraversalVertexCallback;
 import de.hhu.bsinfo.dxgraph.data.Edge;
 import de.hhu.bsinfo.dxgraph.data.Vertex;
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
 import de.hhu.bsinfo.dxram.chunk.ChunkService;
-import de.hhu.bsinfo.dxram.data.DataStructure;
 import de.hhu.bsinfo.dxram.job.AbstractJob;
 import de.hhu.bsinfo.dxram.logger.LoggerService;
 import de.hhu.bsinfo.dxutils.serialization.Exporter;
@@ -71,7 +71,7 @@ class TraverseBFSJob extends AbstractJob {
         try {
             Vertex rootVertex = m_vertexClass.newInstance();
             rootVertex.setID(m_startVertexId);
-            if (chunkService.get(rootVertex) != 1) {
+            if (!chunkService.get().get(rootVertex)) {
                 return;
             }
             current.add(rootVertex);
@@ -97,7 +97,7 @@ class TraverseBFSJob extends AbstractJob {
                         edges[i].setID(vertex.getNeighbours()[i]);
                     }
 
-                    chunkService.get((DataStructure[]) edges);
+                    chunkService.get().get((AbstractChunk[]) edges);
 
                     for (Edge edge : edges) {
                         if (!evaluateEdge(edge, depth)) {
@@ -117,7 +117,7 @@ class TraverseBFSJob extends AbstractJob {
                     }
                 }
 
-                chunkService.get((DataStructure[]) neighbors);
+                chunkService.get().get((AbstractChunk[]) neighbors);
                 for (Vertex neighbor : neighbors) {
                     if (neighbor.getID() != Vertex.INVALID_ID) {
                         next.add(neighbor);

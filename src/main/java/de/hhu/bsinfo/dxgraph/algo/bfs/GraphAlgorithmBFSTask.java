@@ -24,6 +24,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import com.google.gson.annotations.Expose;
 
+import de.hhu.bsinfo.dxmem.data.ChunkID;
+import de.hhu.bsinfo.dxram.ms.tasks.DumpChunkMemoryTask;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -41,9 +43,7 @@ import de.hhu.bsinfo.dxgraph.data.VertexSimple;
 import de.hhu.bsinfo.dxgraph.load.GraphLoadBFSRootListTask;
 import de.hhu.bsinfo.dxgraph.load.GraphLoadPartitionIndexTask;
 import de.hhu.bsinfo.dxram.boot.BootService;
-import de.hhu.bsinfo.dxram.chunk.ChunkMemoryService;
 import de.hhu.bsinfo.dxram.chunk.ChunkService;
-import de.hhu.bsinfo.dxram.data.ChunkID;
 import de.hhu.bsinfo.dxram.lookup.overlay.storage.BarrierID;
 import de.hhu.bsinfo.dxram.ms.Signal;
 import de.hhu.bsinfo.dxram.ms.Task;
@@ -151,6 +151,7 @@ public class GraphAlgorithmBFSTask implements Task {
         m_ctx = p_ctx;
         m_chunkService = m_ctx.getDXRAMServiceAccessor().getService(ChunkService.class);
         m_chunkMemoryService = m_ctx.getDXRAMServiceAccessor().getService(ChunkMemoryService.class);
+        m_ctx.getDXRAMServiceAccessor().getService()
         m_nameserviceService = m_ctx.getDXRAMServiceAccessor().getService(NameserviceService.class);
         m_networkService = m_ctx.getDXRAMServiceAccessor().getService(NetworkService.class);
         m_bootService = m_ctx.getDXRAMServiceAccessor().getService(BootService.class);
@@ -481,7 +482,7 @@ public class GraphAlgorithmBFSTask implements Task {
                 // #endif /* LOGGER >= INFO */
 
                 VertexSimple vertex = new VertexSimple(p_entryVertex);
-                if (m_chunkService.get(vertex) != 1) {
+                if (!m_chunkService.get().get(vertex)) {
                     LOGGER.error("Getting root vertex 0x%X failed", p_entryVertex);
                     // signal all other slaves to terminate (error)
                     m_ctx.getSignalInterface().sendSignalToMaster(Signal.SIGNAL_ABORT);
@@ -1240,7 +1241,7 @@ public class GraphAlgorithmBFSTask implements Task {
 
                 // --------------------------------------------------
 
-                int gett = m_chunkService.getLocal(m_vertexBatch, 0, validVertsInBatch);
+                int gett = m_chunkService.get().get(m_vertexBatch);
                 if (gett != validVertsInBatch) {
                     // #if LOGGER >= ERROR
                     LOGGER.error("Error on getting vertices in BFS Thread %d: %d != %d", m_id, gett, validVertsInBatch);
