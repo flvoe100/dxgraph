@@ -56,7 +56,7 @@ public class BronKerboschAlgo {
         for(long l : v.getNeighbours()){
             Vertex nv = new Vertex();
             nv.setID(l);
-            cs.get(nv);
+            cs.get().get(nv);
             al.add(nv);
         }
         return al;

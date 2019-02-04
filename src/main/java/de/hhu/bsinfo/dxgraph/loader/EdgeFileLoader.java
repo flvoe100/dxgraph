@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class EdgeFileLoader extends NullLoader {
-    private int m_edegs,m_vertices;
+    private int m_edegs, m_vertices;
     private ChunkService m_cs;
     public EdgeFileLoader(ChunkService p_cs) {
         super(p_cs);
@@ -43,7 +43,7 @@ public class EdgeFileLoader extends NullLoader {
                    // m_cs.reserve(v1_vertex);
                     //TODO need lokal node id
                     m_cs.create().create(v1_vertex);
-                    m_cs.put(v1_vertex);
+                    m_cs.put().put(v1_vertex);
                     m_vertices++;
                 }
                 Vertex v2_vertex;
@@ -55,7 +55,7 @@ public class EdgeFileLoader extends NullLoader {
                     vertex_id_map.put(v2, v2_vertex);
                     //m_cs.reserve(v2_vertex);
                     m_cs.create(v2_vertex);
-                    m_cs.put(v2_vertex);
+                    m_cs.put().put(v2_vertex);
                     m_vertices++;
                 }
                 Edge e = new Edge();
@@ -64,13 +64,13 @@ public class EdgeFileLoader extends NullLoader {
                 e.setToId(v2_vertex.getID());
                 v1_vertex.addNeighbour(e.getID());
                 v2_vertex.addNeighbour(e.getID());
-                m_cs.put(e);
+                m_cs.put().put(e);
                 m_edegs++;
             }
             for(Map.Entry<String,Vertex> entry: vertex_id_map.entrySet()){
                 Vertex v = entry.getValue();
                 m_cs.create(v);
-                m_cs.put(v);
+                m_cs.put().put(v);
             }
         } catch (Exception e){
             e.printStackTrace();
