@@ -27,10 +27,10 @@ public class DataLoadingJob extends de.hhu.bsinfo.dxram.job.AbstractJob {
     protected void execute(short p_nodeID, long[] p_chunkIDs) {
         FileOffsetDS ds = new FileOffsetDS(p_chunkIDs[0]);
         m_cs = getService(ChunkService.class);
-        m_cs.get(ds);
+        m_cs.get().get(ds);
 
         DSString ds_class = new DSString(p_chunkIDs[1]);
-        m_cs.get(ds_class);
+        m_cs.get().get(ds_class);
         String m_LoaderClass = ds_class.getPayload();
 
         LOGGER.info("Loading %d files from %s",ds.getFileCount(),ds.m_path);

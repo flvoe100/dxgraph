@@ -19,6 +19,8 @@ import java.util.Arrays;
 
 import com.google.gson.annotations.Expose;
 
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
+import de.hhu.bsinfo.dxmem.data.ChunkID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,8 +29,6 @@ import de.hhu.bsinfo.dxgraph.data.VertexSimple;
 import de.hhu.bsinfo.dxgraph.load.oel.OrderedEdgeList;
 import de.hhu.bsinfo.dxgraph.load.oel.OrderedEdgeListBinaryFileThreadBuffering;
 import de.hhu.bsinfo.dxram.chunk.ChunkService;
-import de.hhu.bsinfo.dxram.data.ChunkID;
-import de.hhu.bsinfo.dxram.data.DataStructure;
 import de.hhu.bsinfo.dxram.ms.Signal;
 import de.hhu.bsinfo.dxram.ms.Task;
 import de.hhu.bsinfo.dxram.ms.TaskContext;
@@ -146,7 +146,7 @@ public class GraphLoadOrderedEdgeListTask implements Task {
         }
 
         // #if LOGGER >= INFO
-        LOGGER.info("Chunkservice status BEFORE load:\n%s", m_chunkService.getStatus());
+        LOGGER.info("Chunkservice status BEFORE load:\n%s", m_chunkService.status().getStatus());
         // #endif /* LOGGER >= INFO */
 
         if (!loadGraphPartition(graphPartitionOel, graphPartitionIndex)) {
@@ -157,7 +157,7 @@ public class GraphLoadOrderedEdgeListTask implements Task {
         }
 
         // #if LOGGER >= INFO
-        LOGGER.info("Chunkservice status AFTER load:\n%s", m_chunkService.getStatus());
+        LOGGER.info("Chunkservice status AFTER load:\n%s", m_chunkService.status().getStatus());
         // #endif /* LOGGER >= INFO */
 
         return 0;
@@ -348,10 +348,10 @@ public class GraphLoadOrderedEdgeListTask implements Task {
             if (readCount < vertexBuffer.length) {
                 vertexBuffer = Arrays.copyOf(vertexBuffer, readCount);
             }
+            short lokalNodeId = this.m_ctx.getCtxData().getOwnNodeId();
+            m_chunkService.create().create(lokalNodeId, (AbstractChunk[]) vertexBuffer);
 
-            m_chunkService.create((DataStructure[]) vertexBuffer);
-
-            int count = m_chunkService.put((DataStructure[]) vertexBuffer);
+            int count = m_chunkService.put().put((AbstractChunk[]) vertexBuffer);
             if (count != readCount) {
                 // #if LOGGER >= ERROR
                 LOGGER.error("Putting vertex data for chunks failed: %d != %d", count, readCount);

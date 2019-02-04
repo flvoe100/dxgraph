@@ -41,7 +41,8 @@ public class EdgeFileLoader extends NullLoader {
                     v1_vertex.setNeighborsAreEdgeObjects(true);
                     vertex_id_map.put(v1,v1_vertex);
                    // m_cs.reserve(v1_vertex);
-                    m_cs.create(v1_vertex);
+                    //TODO need lokal node id
+                    m_cs.create().create(v1_vertex);
                     m_cs.put(v1_vertex);
                     m_vertices++;
                 }
