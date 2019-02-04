@@ -15,7 +15,7 @@ package de.hhu.bsinfo.dxgraph.data;
 
 import java.util.Arrays;
 
-import de.hhu.bsinfo.dxram.data.DataStructure;
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
 import de.hhu.bsinfo.dxutils.serialization.Exporter;
 import de.hhu.bsinfo.dxutils.serialization.Importer;
 import de.hhu.bsinfo.dxutils.serialization.ObjectSizeUtil;
@@ -25,7 +25,7 @@ import de.hhu.bsinfo.dxutils.serialization.ObjectSizeUtil;
  *
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 22.04.2016
  */
-public class GraphRootList extends DataStructure {
+public class GraphRootList extends AbstractChunk {
     private long[] m_roots = new long[0];
 
     /**

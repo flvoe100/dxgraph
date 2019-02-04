@@ -1,12 +1,12 @@
 package de.hhu.bsinfo.dxgraph.data;
 
-import de.hhu.bsinfo.dxram.data.DataStructure;
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
 import de.hhu.bsinfo.dxutils.serialization.Exporter;
 import de.hhu.bsinfo.dxutils.serialization.Importer;
 
 import java.lang.reflect.Array;
 
-public class List<T> extends DataStructure {
+public class List<T> extends AbstractChunk {
     private Class<T> m_datatype;
     private T[] m_data;
     private int m_current;

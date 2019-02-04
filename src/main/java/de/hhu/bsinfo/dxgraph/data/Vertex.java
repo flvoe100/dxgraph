@@ -15,8 +15,9 @@ package de.hhu.bsinfo.dxgraph.data;
 
 import java.util.Arrays;
 
-import de.hhu.bsinfo.dxram.data.ChunkID;
-import de.hhu.bsinfo.dxram.data.DataStructure;
+
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
+import de.hhu.bsinfo.dxmem.data.ChunkID;
 import de.hhu.bsinfo.dxutils.serialization.Exporter;
 import de.hhu.bsinfo.dxutils.serialization.Importer;
 import de.hhu.bsinfo.dxutils.serialization.ObjectSizeUtil;
@@ -26,7 +27,7 @@ import de.hhu.bsinfo.dxutils.serialization.ObjectSizeUtil;
  *
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 09.09.2016
  */
-public class Vertex extends DataStructure {
+public class Vertex extends AbstractChunk {
     public static final long INVALID_ID = ChunkID.INVALID_ID;
 
     private boolean m_neighborsAreEdgeObjects;

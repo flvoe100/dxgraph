@@ -1,6 +1,6 @@
 package de.hhu.bsinfo.dxgraph.data;
 
-import de.hhu.bsinfo.dxram.data.DataStructure;
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
 import de.hhu.bsinfo.dxutils.serialization.Exporter;
 import de.hhu.bsinfo.dxutils.serialization.Importer;
 import de.hhu.bsinfo.dxutils.serialization.ObjectSizeUtil;
@@ -8,7 +8,7 @@ import de.hhu.bsinfo.dxutils.serialization.ObjectSizeUtil;
 /**
  * Created by philipp on 13.07.17.
  */
-public class FileOffsetDS extends DataStructure {
+public class FileOffsetDS extends AbstractChunk {
     public int m_startFile;
     public int m_endFile;
     public String m_path;

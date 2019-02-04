@@ -1,11 +1,11 @@
 package de.hhu.bsinfo.dxgraph.data;
 
-import de.hhu.bsinfo.dxram.data.DataStructure;
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
 import de.hhu.bsinfo.dxutils.serialization.Exporter;
 import de.hhu.bsinfo.dxutils.serialization.Importer;
 import de.hhu.bsinfo.dxutils.serialization.ObjectSizeUtil;
 
-public class DSString extends DataStructure {
+public class DSString extends AbstractChunk {
     private String m_string;
     public DSString(String p_string){
         m_string = p_string;

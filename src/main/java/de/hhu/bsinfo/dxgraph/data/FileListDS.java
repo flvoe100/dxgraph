@@ -1,6 +1,6 @@
 package de.hhu.bsinfo.dxgraph.data;
 
-import de.hhu.bsinfo.dxram.data.DataStructure;
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
 import de.hhu.bsinfo.dxutils.serialization.Exporter;
 import de.hhu.bsinfo.dxutils.serialization.Importer;
 
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by philipp on 27.06.17.
  */
-public class FileListDS extends DataStructure {
+public class FileListDS extends AbstractChunk {
     private String[] m_paths;
     public FileListDS(){
         m_paths = null;

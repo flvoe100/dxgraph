@@ -1,12 +1,12 @@
 package de.hhu.bsinfo.dxgraph.data;
 
-import de.hhu.bsinfo.dxram.data.DataStructure;
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
 import de.hhu.bsinfo.dxutils.serialization.Exporter;
 import de.hhu.bsinfo.dxutils.serialization.Importer;
 
 import java.util.ArrayList;
 
-public class Graph extends DataStructure {
+public class Graph extends AbstractChunk {
     private ArrayList<Edge> edges;
     private ArrayList<Vertex> vertices;
     public Graph(){

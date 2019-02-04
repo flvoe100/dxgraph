@@ -16,8 +16,8 @@ package de.hhu.bsinfo.dxgraph.data;
 import java.util.Map;
 import java.util.TreeMap;
 
-import de.hhu.bsinfo.dxram.data.ChunkID;
-import de.hhu.bsinfo.dxram.data.DataStructure;
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
+import de.hhu.bsinfo.dxmem.data.ChunkID;
 import de.hhu.bsinfo.dxutils.NodeID;
 import de.hhu.bsinfo.dxutils.serialization.Exporter;
 import de.hhu.bsinfo.dxutils.serialization.Importer;
@@ -27,7 +27,7 @@ import de.hhu.bsinfo.dxutils.serialization.Importer;
  *
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 21.04.2016
  */
-public class GraphPartitionIndex extends DataStructure {
+public class GraphPartitionIndex extends AbstractChunk {
     private Map<Integer, Entry> m_index = new TreeMap<>();
     private int m_size;
 
@@ -195,7 +195,7 @@ public class GraphPartitionIndex extends DataStructure {
      *
      * @author Stefan Nothaas, stefan.nothaas@hhu.de, 21.04.2016
      */
-    public static class Entry extends DataStructure {
+    public static class Entry extends AbstractChunk {
         private short m_nodeId = -1;
         private int m_partitionIndex = -1;
         private long m_vertexCount = -1;

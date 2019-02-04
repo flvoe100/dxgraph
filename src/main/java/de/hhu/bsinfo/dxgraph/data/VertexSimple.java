@@ -15,7 +15,7 @@ package de.hhu.bsinfo.dxgraph.data;
 
 import java.util.Arrays;
 
-import de.hhu.bsinfo.dxram.data.DataStructure;
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
 import de.hhu.bsinfo.dxutils.serialization.Exporter;
 import de.hhu.bsinfo.dxutils.serialization.Importer;
 import de.hhu.bsinfo.dxutils.serialization.ObjectSizeUtil;
@@ -27,7 +27,7 @@ import de.hhu.bsinfo.dxutils.serialization.ObjectSizeUtil;
  *
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 22.04.2016
  */
-public class VertexSimple extends DataStructure {
+public class VertexSimple extends AbstractChunk {
     private boolean m_flagWriteUserdataOnly = false;
 
     private int m_userData = -1;

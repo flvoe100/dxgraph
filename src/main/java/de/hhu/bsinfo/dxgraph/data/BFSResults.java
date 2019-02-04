@@ -16,7 +16,7 @@ package de.hhu.bsinfo.dxgraph.data;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.hhu.bsinfo.dxram.data.DataStructure;
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
 import de.hhu.bsinfo.dxutils.NodeID;
 import de.hhu.bsinfo.dxutils.serialization.Exporter;
 import de.hhu.bsinfo.dxutils.serialization.Importer;
@@ -26,7 +26,7 @@ import de.hhu.bsinfo.dxutils.serialization.Importer;
  *
  * @author Stefan Nothaas, stefan.nothaas@hhu.de, 20.05.2016
  */
-public class BFSResults extends DataStructure {
+public class BFSResults extends AbstractChunk {
     private BFSResult m_aggregatedResult = new BFSResult();
     private Map<Integer, BFSResult> m_bfsResults = new HashMap<>();
 
