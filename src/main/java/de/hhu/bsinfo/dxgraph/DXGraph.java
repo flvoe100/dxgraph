@@ -16,12 +16,13 @@ package de.hhu.bsinfo.dxgraph;
 import de.hhu.bsinfo.dxgraph.algo.bfs.interfaces.TraversalVertexCallback;
 import de.hhu.bsinfo.dxgraph.data.Edge;
 import de.hhu.bsinfo.dxgraph.data.Vertex;
+import de.hhu.bsinfo.dxmem.data.AbstractChunk;
 import de.hhu.bsinfo.dxram.app.AbstractApplication;
-import de.hhu.bsinfo.dxram.chunk.ChunkRemoveService;
+import de.hhu.bsinfo.dxram.boot.BootService;
 import de.hhu.bsinfo.dxram.chunk.ChunkService;
-import de.hhu.bsinfo.dxram.data.DataStructure;
 import de.hhu.bsinfo.dxram.engine.DXRAMVersion;
 import de.hhu.bsinfo.dxram.generated.BuildConfig;
+import de.hhu.bsinfo.dxutils.NodeID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,7 +41,7 @@ public class DXGraph extends AbstractApplication {
     private static final Logger LOGGER = LogManager.getFormatterLogger(DXGraph.class.getSimpleName());
 
     private ChunkService m_chunkService;
-    private ChunkRemoveService m_chunkRemoveService;
+    private BootService bootService;
 
     /**
      * Create storage on the current node for one or multiple vertices. This assigns
@@ -51,7 +52,8 @@ public class DXGraph extends AbstractApplication {
      *         Vertices to create storage space for.
      */
     public void createVertices(final Vertex... p_vertices) {
-        m_chunkService.create((DataStructure[]) p_vertices);
+
+        m_chunkService.create().create(bootService.getNodeID(), (AbstractChunk[]) p_vertices);
     }
 
     /**
@@ -66,7 +68,7 @@ public class DXGraph extends AbstractApplication {
      * @return Number of successfully created storage locations.
      */
     public int createVertices(final short p_nodeId, final Vertex... p_vertices) {
-        return m_chunkService.createRemote(p_nodeId, (DataStructure[]) p_vertices);
+        return m_chunkService.create().create(p_nodeId, (AbstractChunk[]) p_vertices);
     }
 
     /**
@@ -78,7 +80,7 @@ public class DXGraph extends AbstractApplication {
      *         Edges to create storage space for.
      */
     public void createEdges(final Edge... p_edges) {
-        m_chunkService.create((DataStructure[]) p_edges);
+        m_chunkService.create().create(bootService.getNodeID(), (AbstractChunk[]) p_edges);
     }
 
     /**
@@ -93,7 +95,7 @@ public class DXGraph extends AbstractApplication {
      * @return Number of successfully created storage locations.
      */
     public int createEdges(final short p_nodeId, final Edge... p_edges) {
-        return m_chunkService.createRemote(p_nodeId, (DataStructure[]) p_edges);
+        return m_chunkService.create().create(p_nodeId, (AbstractChunk[]) p_edges);
     }
 
     /**
@@ -104,7 +106,7 @@ public class DXGraph extends AbstractApplication {
      * @return Number of successfully written vertices.
      */
     public int putVertices(final Vertex... p_vertices) {
-        return m_chunkService.put((DataStructure[]) p_vertices);
+        return m_chunkService.put().put((AbstractChunk[]) p_vertices);
     }
 
     /**
@@ -115,7 +117,7 @@ public class DXGraph extends AbstractApplication {
      * @return Number of successfully written edges.
      */
     public int putEdges(final Edge... p_edges) {
-        return m_chunkService.put((DataStructure[]) p_edges);
+        return m_chunkService.put().put((AbstractChunk[]) p_edges);
     }
 
     /**
@@ -126,7 +128,7 @@ public class DXGraph extends AbstractApplication {
      * @return Number of successfully read vertices.
      */
     public int getVertices(final Vertex... p_vertices) {
-        return m_chunkService.get((DataStructure[]) p_vertices);
+        return m_chunkService.get().get((AbstractChunk[]) p_vertices);
     }
 
     /**
@@ -137,7 +139,7 @@ public class DXGraph extends AbstractApplication {
      * @return Number of successfully read edges.
      */
     public int getEdges(final Edge... p_edges) {
-        return m_chunkService.get((DataStructure[]) p_edges);
+        return m_chunkService.get().get((AbstractChunk[]) p_edges);
     }
 
     /**
@@ -148,7 +150,7 @@ public class DXGraph extends AbstractApplication {
      * @return Number of successfully deleted vertices.
      */
     public int deleteVertices(final Vertex... p_vertices) {
-        return m_chunkRemoveService.remove((DataStructure[]) p_vertices);
+        return m_chunkService.remove().remove((AbstractChunk[]) p_vertices);
     }
 
     /**
@@ -159,7 +161,7 @@ public class DXGraph extends AbstractApplication {
      * @return Number of successfully deleted edges.
      */
     public int deleteEdges(final Edge... p_edges) {
-        return m_chunkRemoveService.remove((DataStructure[]) p_edges);
+        return m_chunkService.remove().remove((AbstractChunk[]) p_edges);
     }
 
     /**
@@ -194,7 +196,7 @@ public class DXGraph extends AbstractApplication {
             }
         }
 
-        m_chunkService.get((DataStructure[]) edges);
+        m_chunkService.get().get((AbstractChunk[]) edges);
         return edges;
     }
 
@@ -223,7 +225,7 @@ public class DXGraph extends AbstractApplication {
                 edges[i] = new Edge(p_vertex.getNeighbours()[i]);
             }
 
-            m_chunkService.get((DataStructure[]) edges);
+            m_chunkService.get().get((AbstractChunk[]) edges);
 
             for (int i = 0; i < edges.length; i++) {
                 if (edges[i] != null) {
@@ -248,7 +250,7 @@ public class DXGraph extends AbstractApplication {
             }
         }
 
-        m_chunkService.get((DataStructure[]) vertices);
+        m_chunkService.get().get((AbstractChunk[]) vertices);
         return vertices;
     }
 
@@ -268,18 +270,13 @@ public class DXGraph extends AbstractApplication {
         return "DXGraph";
     }
 
-
     @Override
-    public boolean useConfigurationFile() {
-        return false;
-    }
-
-    @Override
-    public void main() {
+    public void main(String[] p_args) {
         m_chunkService = getService(ChunkService.class);
-        m_chunkRemoveService = getService(ChunkRemoveService.class);
+        bootService = getService(BootService.class);
         LOGGER.info("Started DXGraph 1.0");
     }
+
 
     @Override
     public void signalShutdown() {
