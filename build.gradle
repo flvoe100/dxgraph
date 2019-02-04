@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'de.hhu.bsinfo:dxram:0.4.0'
+    implementation 'de.hhu.bsinfo:dxram:0.6.0'
 
     testImplementation 'junit:junit:4.12'
 }
